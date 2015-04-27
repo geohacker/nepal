@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
+	<title>Nepal - Maps refreshed every 30 mins</title>
+
+	<style>
+		body { margin:0; padding:0; }
+		#map { position:absolute; top:0; bottom:0; width:100%; }
+	</style>
+</head>
+
+<body>
+
+	<div id='map'></div>
+	<script>
+
+		L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaGFja2VyIiwiYSI6ImFIN0hENW8ifQ.GGpH9gLyEg0PZf3NPQ7Vrg';
+		var map = L.mapbox.map('map', 'planemad.461ec63e')
+		.setView([27.7052, 85.3214], 13);
+
+	</script>
+
+</body>
