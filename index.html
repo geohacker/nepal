@@ -69,28 +69,35 @@
 			layer
 			.setZIndex(zIndex);
 
-	    // Create a simple layer switcher that
-	    // toggles layers on and off.
-	    var link = document.createElement('a');
-	    link.href = '#';
-	    link.className = '';
-	    link.innerHTML = name;
+		    // Create a simple layer switcher that
+		    // toggles layers on and off.
+		    var link = document.createElement('a');
+		    link.href = '#';
+		    link.className = '';
+		    link.innerHTML = name;
 
-	    link.onclick = function(e) {
-	    	e.preventDefault();
-	    	e.stopPropagation();
+		    link.onclick = function(e) {
+		    	e.preventDefault();
+		    	e.stopPropagation();
 
-	    	if (map.hasLayer(layer)) {
-	    		map.removeLayer(layer);
-	    		this.className = '';
-	    	} else {
-	    		map.addLayer(layer);
-	    		this.className = 'active';
-	    	}
-	    };
+		    	if (map.hasLayer(layer)) {
+		    		map.removeLayer(layer);
+		    		this.className = '';
+		    	} else {
+		    		map.addLayer(layer);
+		    		this.className = 'active';
+		    	}
+		    };
 
-	    layers.appendChild(link);
-	}
+		    layers.appendChild(link);
+		}
+
+		var link = document.createElement('a');
+		link.href = 'https://github.com/geohacker/nepal/raw/master/streetmaps/Kathmandu/downtown_z17.jpeg';
+		link.className = ' '
+		link.innerHTML = 'Download Kathmandu';
+		layers.appendChild(link);
+		
 </script>
 
 </body>
