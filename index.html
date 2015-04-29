@@ -58,14 +58,15 @@
 	<script>
 
 		L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaGFja2VyIiwiYSI6ImFIN0hENW8ifQ.GGpH9gLyEg0PZf3NPQ7Vrg';
-		var map = L.mapbox.map('map', 'kll.ptthjjor')
+		var map = L.mapbox.map('map', 'mapbox.light')
 		.setView([27.7052, 85.3214], 13);
 
 		var layers = document.getElementById('menu-ui');
 
-		addLayer(L.mapbox.tileLayer('mulloverit.i2sdobt9'), 'View Shake Map', 2);
+		addLayer(L.mapbox.tileLayer('kll.ptthjjor'), 'Humanitarian', 0);
 		addLayer(L.mapbox.tileLayer('planemad.5504651b'), 'Road Connectivity', 3);
-		
+		addLayer(L.mapbox.tileLayer('mulloverit.i2sdobt9'), 'Shake Map', 2);
+
 		function addLayer(layer, name, zIndex) {
 			layer
 			.setZIndex(zIndex);
@@ -94,9 +95,9 @@
 		}
 
 		var link = document.createElement('a');
-		link.href = 'https://github.com/geohacker/nepal/raw/master/streetmaps/Kathmandu/downtown_z17.jpeg';
+		link.href = 'http://kathmandulivinglabs.github.io/quake-maps/';
 		link.className = ' '
-		link.innerHTML = 'Download Kathmandu';
+		link.innerHTML = 'Printable';
 		layers.appendChild(link);
 
 </script>
