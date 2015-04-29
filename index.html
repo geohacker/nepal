@@ -4,6 +4,7 @@
 
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+	<script src="libs/leaflet-hash.js"></script>
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
 
 	<title>Nepal - Maps refreshed every 30 mins</title>
@@ -60,45 +61,80 @@
 		L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaGFja2VyIiwiYSI6ImFIN0hENW8ifQ.GGpH9gLyEg0PZf3NPQ7Vrg';
 		var map = L.mapbox.map('map', 'mapbox.light')
 		.setView([27.7052, 85.3214], 13);
+		var hash = new L.Hash(map);
 
 		var layers = document.getElementById('menu-ui');
+		var overlays = {
+			'humanitarian': {
+				'id': 'kll.ptthjjor',
+				'name': 'Humanitarian',
+				'slug': 'humanitarian',
+				'z': 0,
+				'layer': L.mapbox.tileLayer('kll.ptthjjor')
+			},
+			'road': {
+				'id': 'planemad.5504651b',
+				'name': 'Road Connectivity',
+				'slug': 'road',
+				'z': 3,
+				'layer': L.mapbox.tileLayer('planemad.5504651b')
+			},
+			'shake': {
+				'id': 'mulloverit.i2sdobt9',
+				'name': 'Shake Map',
+				'slug': 'shake',
+				'z': 2,
+				'layer': L.mapbox.tileLayer('mulloverit.i2sdobt9')
+			}
+		};
 
-		addLayer(L.mapbox.tileLayer('kll.ptthjjor'), 'Humanitarian', 0);
-		addLayer(L.mapbox.tileLayer('planemad.5504651b'), 'Road Connectivity', 3);
-		addLayer(L.mapbox.tileLayer('mulloverit.i2sdobt9'), 'Shake Map', 2);
+		for (var l in overlays) {
+			addLayer(overlays[l].slug, overlays[l].name, overlays[l].z);
+		}
 
-		function addLayer(layer, name, zIndex) {
-			layer
-			.setZIndex(zIndex);
+		function addLayer(slug, name, zIndex) {
+			// layer
+			// .setZIndex(zIndex);
 
 		    // Create a simple layer switcher that
 		    // toggles layers on and off.
 		    var link = document.createElement('a');
 		    link.href = '#';
-		    link.className = '';
+		    link.className = slug;
 		    link.innerHTML = name;
 
 		    link.onclick = function(e) {
 		    	e.preventDefault();
 		    	e.stopPropagation();
+		    	switchLayer(slug, this);
+		};
 
-		    	if (map.hasLayer(layer)) {
-		    		map.removeLayer(layer);
-		    		this.className = '';
-		    	} else {
-		    		map.addLayer(layer);
-		    		this.className = 'active';
-		    	}
-		    };
-
-		    layers.appendChild(link);
-		}
-
-		var link = document.createElement('a');
-		link.href = 'http://kathmandulivinglabs.github.io/quake-maps/';
-		link.className = ' '
-		link.innerHTML = 'Printable';
 		layers.appendChild(link);
+	}
+
+	var link = document.createElement('a');
+	link.href = 'http://kathmandulivinglabs.github.io/quake-maps/';
+	link.className = ' '
+	link.innerHTML = 'Printable';
+	layers.appendChild(link);
+
+	if (window.location.search) {
+		switchLayer(window.location.search.split('=')[1]);
+	}
+
+	function switchLayer(slug) {
+		element = $('.'+slug);
+		var layer = overlays[slug].layer;
+		if (map.hasLayer(layer)) {
+			window.location.search = '';
+			map.removeLayer(layer);
+			$('.'+slug).removeClass('active');
+		} else {
+			map.addLayer(layer);
+			window.location.search = 'layer='+slug;
+			$('.'+slug).addClass('active');
+		}
+	}
 
 </script>
 
