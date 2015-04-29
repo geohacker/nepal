@@ -64,7 +64,8 @@
 		var layers = document.getElementById('menu-ui');
 
 		addLayer(L.mapbox.tileLayer('mulloverit.i2sdobt9'), 'View Shake Map', 2);
-
+		addLayer(L.mapbox.tileLayer('planemad.5504651b'), 'Road Connectivity', 3);
+		
 		function addLayer(layer, name, zIndex) {
 			layer
 			.setZIndex(zIndex);
@@ -97,7 +98,7 @@
 		link.className = ' '
 		link.innerHTML = 'Download Kathmandu';
 		layers.appendChild(link);
-		
+
 </script>
 
 </body>
