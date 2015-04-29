@@ -5,7 +5,10 @@
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
 	<script src="libs/leaflet-hash.js"></script>
+	<script src="libs/geosearch/l.control.geosearch.js"></script>
+	<script src="libs/geosearch/l.geosearch.provider.google.js"></script>
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+	<link href='libs/geosearch/l.geosearch.css' rel='stylesheet' />
 
 	<title>Nepal - Maps refreshed every 30 mins</title>
 
@@ -50,6 +53,9 @@
 		.menu-ui a.active:hover {
 			background:#3074a4;
 		}
+		.leaflet-control-geosearch {
+			width: 200px;
+		}
 	</style>
 </head>
 
@@ -60,8 +66,15 @@
 
 		L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaGFja2VyIiwiYSI6ImFIN0hENW8ifQ.GGpH9gLyEg0PZf3NPQ7Vrg';
 		var map = L.mapbox.map('map', 'mapbox.light')
-		.setView([27.7052, 85.3214], 13);
+			.setView([27.7052, 85.3214], 13);
+
 		var hash = new L.Hash(map);
+
+		new L.Control.GeoSearch({
+			provider: new L.GeoSearch.Provider.Google(),
+			position: 'bottomright',
+			showMarker: false
+		}).addTo(map);
 
 		var layers = document.getElementById('menu-ui');
 		var overlays = {
