@@ -153,7 +153,7 @@
 	layers.appendChild(link);
 
 	if (window.location.search) {
-		var layers = window.location.search.split("=")[1].split(",");
+		var layers = getCurrentLayersFromURL();
 		for (var i=0; i<layers.length; i++) {
 			switchLayer(layers[i]);
 			//switchLayer(window.location.search.split('=')[1]);
@@ -211,7 +211,6 @@
 	}
 
 	function setLayersState(layersString) {
-		console.log(layersString);
 		var url;
 		if (layersString === '') {
 			url = '?'+window.location.hash; 
