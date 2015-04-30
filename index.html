@@ -90,7 +90,16 @@
 				'name': 'Road Connectivity',
 				'slug': 'road',
 				'z': 3,
-				'layer': L.mapbox.tileLayer('planemad.5504651b')
+				'layer': L.mapbox.tileLayer('planemad.5504651b'),
+				'gridLayer': L.mapbox.gridLayer('planemad.5504651b')
+			},
+			'health': {
+				'id': 'planemad.353be7fb',
+				'name': 'WHO Healthcare Facilities',
+				'slug': 'health',
+				'z': 2,
+				'layer': L.mapbox.tileLayer('planemad.353be7fb'),
+				'gridLayer': L.mapbox.gridLayer('planemad.353be7fb')
 			},
 			'shake': {
 				'id': 'mulloverit.i2sdobt9',
@@ -189,13 +198,28 @@
 		element = $('.'+slug);
 
 		var layer = overlays[slug].layer;
+		var gridLayer = overlays[slug].gridLayer;
 		if (map.hasLayer(layer)) {
 			//window.location.search = '';
 			removeLayerState(slug);
 			map.removeLayer(layer);
+			if (gridLayer) {
+				map.removeLayer(gridLayer);
+			}
 			$('.'+slug).removeClass('active');
 		} else {
 			map.addLayer(layer);
+			if (overlays[slug].gridLayer) {
+				gridLayer.addTo(map);
+				// var gridControl = L.mapbox.gridControl(gridLayer).addTo(map);
+				gridLayer.on('click', function(e) {
+					if (!e.data) return;
+					var popup = L.popup()
+						.setLatLng(e.latLng)
+						.setContent(JSON.stringify(e.data))
+						.openOn(map);
+				});
+			}
 			if (zoomTo) {
 				map.setView(zoomTo[0], zoomTo[1]);
 			}
