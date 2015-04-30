@@ -203,7 +203,9 @@
 
 	function addLayerState(slug) {
 		var currentLayers = getCurrentLayersFromURL();
-		currentLayers.push(slug);
+		if (currentLayers.indexOf(slug) === -1) {
+			currentLayers.push(slug);
+		}
 		var layerString = currentLayers.join(",");
 		setLayersState(layerString);
 	}
