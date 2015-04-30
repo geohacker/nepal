@@ -214,7 +214,7 @@
 		console.log(layersString);
 		var url;
 		if (layersString === '') {
-			url = window.location.hash; 
+			url = '?'+window.location.hash; 
 		} else {
 			url = "?layers=" + layersString + window.location.hash;
 		}
