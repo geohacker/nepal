@@ -152,7 +152,11 @@
 	layers.appendChild(link);
 
 	if (window.location.search) {
-		switchLayer(window.location.search.split('=')[1]);
+		var layers = window.location.search.split("=")[1].split(",");
+		for (var i=0; i<layers.length; i++) {
+			switchLayer(layers[i]);
+			//switchLayer(window.location.search.split('=')[1]);
+		}
 	}
 
 	function switchLayer(slug, zoomTo) {
@@ -164,14 +168,49 @@
 
 		var layer = overlays[slug].layer;
 		if (map.hasLayer(layer)) {
-			window.location.search = '';
+			//window.location.search = '';
+			removeLayerState(slug);
 			map.removeLayer(layer);
 			$('.'+slug).removeClass('active');
 		} else {
 			map.addLayer(layer);
-			window.location.search = 'layer='+slug;
+			addLayerState(slug);
+			//window.location.search = 'layer='+slug;
 			$('.'+slug).addClass('active');
 		}
+	}
+
+	function removeLayerState(slug) {
+		var currentLayers = getCurrentLayersFromURL();
+		var newLayers = [];
+		currentLayers.forEach(function(layer) {
+			if (layer !== slug) {
+				newLayers.push(layer);
+			}
+		});
+		var layerString = newLayers.join(",");
+		setLayersState(layerString);
+	}
+
+	function getCurrentLayersFromURL() {
+		var currentLayers = [];
+		var search = window.location.search;
+		if (search !== '') {
+			currentLayers = search.split("=")[1].split(",")
+		}
+		return currentLayers;		
+	}
+
+	function addLayerState(slug) {
+		var currentLayers = getCurrentLayersFromURL();
+		currentLayers.push(slug);
+		var layerString = currentLayers.join(",");
+		setLayersState(layerString);
+	}
+
+	function setLayersState(layersString) {
+		var url = "?layers=" + layersString + window.location.hash;
+		window.history.replaceState(null, null, url);
 	}
 
 </script>
