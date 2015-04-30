@@ -112,6 +112,7 @@
 				'name': 'Digital Globe 2015-04-25 Post',
 				'slug': 'dg-kathmandu',
 				'z': 2,
+				'zoomTo': [[27.7104, 85.3806], 13],
 				'layer': L.mapbox.tileLayer('mapbox.satellite-kathmandu-20150425-after')
 			},
 			'hiu': {
@@ -121,6 +122,14 @@
 				'z': 2,
 				'zoomTo': [[28.0941, 84.7520], 11],
 				'layer': L.tileLayer('http://hiu-maps.net/hot/1.0.0/gorkha-apr2015-flipped/{z}/{x}/{y}.png')
+			},
+			'pleiades': {
+				'id': '',
+				'name': 'Pleiades Kathmandu 2015-04-27 Post',
+				'slug': 'pleiades',
+				'z': 0,
+				'zoomTo': [[27.7104, 85.3806], 12],
+				'layer': L.tileLayer('http://imagery.openstreetmap.fr/tms/1.0.0/kathmandu_pleiades_20150427/{z}/{x}/{y}.png')
 			}
 		};
 
