@@ -98,17 +98,37 @@
 				'slug': 'shake',
 				'z': 2,
 				'layer': L.mapbox.tileLayer('mulloverit.i2sdobt9')
+			},
+			'isro-kathmandu': {
+				'id': 'char.8p7td2vk',
+				'name': 'Cartosat-2 Kathmandu 2015-04-27 Post' ,
+				'slug': 'isro-kathmandu',
+				'z': 2,
+				'layer': L.mapbox.tileLayer('char.8p7td2vk')
+			},
+			'dg-kathmandu': {
+				'id': 'mapbox.satellite-kathmandu-20150425-after',
+				'name': 'Digital Globe 2015-04-25 Post',
+				'slug': 'dg-kathmandu',
+				'z': 2,
+				'layer': L.mapbox.tileLayer('mapbox.satellite-kathmandu-20150425-after')
+			},
+			'hiu': {
+				'id': '',
+				'name': 'HIU MapGive Gorkha Post',
+				'slug': 'hiu',
+				'z': 2,
+				'zoomTo': [[28.0941, 84.7520], 11],
+				'layer': L.tileLayer('http://hiu-maps.net/hot/1.0.0/gorkha-apr2015-flipped/{z}/{x}/{y}.png')
 			}
 		};
 
 		for (var l in overlays) {
-			addLayer(overlays[l].slug, overlays[l].name, overlays[l].z);
+			addLayer(overlays[l].slug, overlays[l].name, overlays[l].z, overlays[l].zoomTo);
 		}
 
-		function addLayer(slug, name, zIndex) {
-			// layer
-			// .setZIndex(zIndex);
 
+		function addLayer(slug, name, zIndex, zoomTo) {
 		    // Create a simple layer switcher that
 		    // toggles layers on and off.
 		    var link = document.createElement('a');
@@ -119,7 +139,7 @@
 		    link.onclick = function(e) {
 		    	e.preventDefault();
 		    	e.stopPropagation();
-		    	switchLayer(slug, this);
+		    	switchLayer(slug, zoomTo);
 		};
 
 		layers.appendChild(link);
@@ -135,8 +155,13 @@
 		switchLayer(window.location.search.split('=')[1]);
 	}
 
-	function switchLayer(slug) {
+	function switchLayer(slug, zoomTo) {
 		element = $('.'+slug);
+		if (zoomTo) {
+			console.log(zoomTo);
+			map.setView(zoomTo[0], zoomTo[1]);
+		}
+
 		var layer = overlays[slug].layer;
 		if (map.hasLayer(layer)) {
 			window.location.search = '';
