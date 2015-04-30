@@ -104,6 +104,7 @@
 				'name': 'Cartosat-2 Kathmandu 2015-04-27 Post' ,
 				'slug': 'isro-kathmandu',
 				'z': 2,
+				'zoomTo': [[27.7104, 85.3806], 12],
 				'layer': L.mapbox.tileLayer('char.8p7td2vk')
 			},
 			'dg-kathmandu': {
@@ -161,10 +162,6 @@
 
 	function switchLayer(slug, zoomTo) {
 		element = $('.'+slug);
-		if (zoomTo) {
-			console.log(zoomTo);
-			map.setView(zoomTo[0], zoomTo[1]);
-		}
 
 		var layer = overlays[slug].layer;
 		if (map.hasLayer(layer)) {
@@ -174,6 +171,9 @@
 			$('.'+slug).removeClass('active');
 		} else {
 			map.addLayer(layer);
+			if (zoomTo) {
+				map.setView(zoomTo[0], zoomTo[1]);
+			}
 			addLayerState(slug);
 			//window.location.search = 'layer='+slug;
 			$('.'+slug).addClass('active');
@@ -211,7 +211,13 @@
 	}
 
 	function setLayersState(layersString) {
-		var url = "?layers=" + layersString + window.location.hash;
+		console.log(layersString);
+		var url;
+		if (layersString === '') {
+			url = window.location.hash; 
+		} else {
+			url = "?layers=" + layersString + window.location.hash;
+		}
 		window.history.replaceState(null, null, url);
 	}
 
